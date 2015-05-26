@@ -36,7 +36,8 @@ class User
 	field :api_token, type: String
 	
 	# relations
-	has_one :account, class_name: "Api::V1::Account"
+	#has_one :account, class_name: "Api::V1::Account"
+	has_and_belongs_to_many :accounts, class_name: "Api::V1::Account"
 
 	## Confirmable
 	# field :confirmation_token,   type: String
