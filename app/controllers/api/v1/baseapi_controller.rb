@@ -9,7 +9,7 @@ class Api::V1::BaseapiController < ApplicationController
 			begin
 				@json = JSON.parse(request.body.read)
 			rescue 
-				@json = {:wreet => 'co'}
+				@json = {:status => 'parse error, please verify JSON syntax'}
 			end
 		end
 	
