@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 			end # end contact scope
 			scope '/accounts' do 
 				post '/' => 'accounts#index' # account data
-				post'/tags' => 'accounts#get_tags' # all tags for that account
+				post '/tags' => 'accounts#get_tags' # all tags for that account
+				post '/tags/remove' => 'accounts#remove_tag'
 			end # end account scope
 			scope '/tags' do
 				# global tag actions
