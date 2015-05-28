@@ -5,8 +5,9 @@ module Api
 			# /contacts
 			def index
 				# we need to check for params
+				# do the tag search
 				if params[:search_params][:tag]
-					tag = params[:search_params][:tag].match(/[A-Za-z0-9\s]+/)[0];
+					tag = params[:search_params][:tag].match(/[A-Za-z0-9\s]+/)[0]
 					# lets search this account's contact's for this tag
 					# in theory we could 'un-nill' the inverse relation on the tag 
 					# model to be able to do tag_obj.contacts but that would search the
@@ -25,6 +26,37 @@ module Api
 					return
 				end # end tag search
 				
+				# do assignment handling
+				if params[:search_params][:assigned]
+					# clean it
+					assigned = params[:search_params][:assigned].match(/[A-Za-z0-9\s]+/)[0]
+					contacts = []
+					if assigned == "unassigned"
+						# get only unassigned contacts
+						@user.accounts.first.contacts.each do |c| # each contact
+							if c.assignments[:assigned] == false
+								# unassigned contact
+								contacts << c
+							end
+						end # end iterate contacts
+					else
+						# otherwise we know to search by a username(email address)
+						if assigned == "mine" # we know to use our email
+							assigned = @user.email
+						end
+						# now we use it to get back all account contacts that have this member
+						@user.accounts.first.contacts.each do |c| # each contact
+							c.assignments[:members].each do |m| # each member
+								if m == assigned
+									contacts << c
+								end
+							end # end members iteration 
+						end # end contact iteration
+							
+					end # end assigned/unassigned if/else
+					render json: contacts.to_json
+					return
+				end # end assign handling
 				
 				# if we make it here then send all contacts for this account, no search params
 				render json: @user.accounts.first.contacts.to_json
@@ -34,3 +66,7 @@ module Api
 		end # end Contacts controller
 	end # end V1
 end # end Api
+
+
+
+
