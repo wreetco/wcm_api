@@ -3,6 +3,21 @@ class Api::V1::BaseapiController < ApplicationController
   protect_from_forgery with: :null_session
 	before_filter :parse_request, :authenticate_user_from_token!
 	
+	# methods for the other API controllers 
+	def sanitize_obj(obj)
+		# clean it up so that it doesn't nosqli the fuck out of us
+		# gsub(/["';{}\\]+/, "") current nosql injection prevent regex
+		obj.each do |v|
+			if v.is_a? Array or v.is_a? Hash # if it's iterabe we need to try again
+				v = sanitize_obj(v) # send it back
+			end
+			if v.is_a? String
+				v = v.gsub(/["';{}\\]+/, "") 
+			end
+		end # end object iteration
+	end # end sanitize_obj method
+	
+	
 	private
 	
 		def parse_request

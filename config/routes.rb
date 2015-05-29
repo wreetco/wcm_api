@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 	namespace :api do
 		namespace :v1 do
 			scope '/contacts' do
-				post '/' => 'contacts#index' # all accounts for user
+				post '/' => 'contacts#search' # search for this contact
+				post '/new' => 'contacts#new'
 			end # end contact scope
 			scope '/accounts' do 
 				post '/' => 'accounts#index' # account data

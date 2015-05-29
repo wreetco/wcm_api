@@ -3,7 +3,7 @@ module Api
 		class Api::V1::ContactsController < Api::V1::BaseapiController
 
 			# /contacts
-			def index
+			def search
 				# we need to check for params
 				# do the tag search
 				if params[:search_params][:tag]
@@ -64,6 +64,46 @@ module Api
 				render json: @user.accounts.first.contacts.to_json
 			end # end index/search method
 			
+			# /contacts/new
+			def new
+				# we are going to make a new contact yall
+				''' # prop list for while we build this out
+					_id => {BSON::ID}
+					email
+					phone_numbers => {}
+					address => {}
+					first_name
+					last_name
+					source
+					account_id
+					employer => {}
+					assignments => {bool, []}
+					social_accounts => {}
+					created_date
+					tag_ids => []
+					contact_form_data = {}
+				'''
+				# comes in like post
+				# {'api_token': ..., 'contact': {}}
+				contact_params = params[:contact] # be sure to clean all the values
+				# clean them up
+				contact_params = sanitize_obj(contact_params);
+				# lets allow rails to build this for us automagically
+				c = Contact.new
+				c.from_json(contact_params.to_json) # generate from our cleaned params
+				# should be it for that, as long as the keys mactch rails should set it
+				
+				# now we can save the contact
+				
+				# now let's this new contact to the client
+				render json: {:status => "success", :contact => c}
+			end # end new contact
+			
+			
+			# /contacts/tags/add
+			def add_tag_to_contact
+				
+			end # end add_tag_to_contact method
 			
 			# /contacts/tags/remove
 			def remove_tag_from_contact
