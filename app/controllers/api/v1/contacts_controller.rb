@@ -39,6 +39,8 @@ module Api
 								contacts << c
 							end
 						end # end iterate contacts
+					elsif assigned == "all"
+						contacts = @user.accounts.first.contacts
 					else
 						# otherwise we know to search by a username(email address)
 						if assigned == "mine" # we know to use our email
@@ -60,12 +62,27 @@ module Api
 				
 				# if we make it here then send all contacts for this account, no search params
 				render json: @user.accounts.first.contacts.to_json
-			end
+			end # end index/search method
+			
+			
+			# /contacts/tags/remove
+			def remove_tag_from_contact
+				# unlike the remove method in account, this only removes the tag from one contact
+				
+			end # end remove_tag_from_contact method
+			
+			
 			
 
 		end # end Contacts controller
 	end # end V1
 end # end Api
+
+
+
+
+
+
 
 
 
