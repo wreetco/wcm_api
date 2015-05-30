@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 			scope '/contacts' do
 				post '/' => 'contacts#search' # search for this contact
 				post '/new' => 'contacts#new'
+				post '/tags/add' => 'contacts#add_tag_to_contact'
 			end # end contact scope
 			scope '/accounts' do 
 				post '/' => 'accounts#index' # account data

@@ -79,6 +79,9 @@ module Api
 				
 				# now we can save the contact
 				#c.save
+				#@user.accounts.first.contacts << c
+				#@user.accounts.first.save
+				
 				# now let's this new contact to the client
 				render json: {:status => "success", :contact => c}
 			end # end new contact
@@ -86,7 +89,33 @@ module Api
 			
 			# /contacts/tags/add
 			def add_tag_to_contact
+				# add a tag to this contact
+				# collect and clean the params
+				tag_text = params[:tag_text].match(/[A-Za-z0-9-]+/)[0]
+				contact_id = params[:contact_id].match(/[A-Fa-f0-9]+/)[0]
+				# let's see if this tag exists. if so, set tag to equal its corresponding object 
+				tag = Tag.where(:tag => tag_text).first
+				# see if we got one
+				if !tag
+					# if we don't find the tag, make one
+					tag = Tag.new
+					tag.tag = tag_text
+					tag.save
+				end
+				# after we have a tag, let's add it to the contact
+				# find the parent contact
+				contact = Contact.where(:id => contact_id).first
+				if !contact
+					# something way fucked happened
+				end
+				# append tag to tags list
+				contact.tags << tag
+				# save it
+				contact.save
 				
+				
+				
+				render json: {:contact => contact}
 			end # end add_tag_to_contact method
 			
 			# /contacts/tags/remove
