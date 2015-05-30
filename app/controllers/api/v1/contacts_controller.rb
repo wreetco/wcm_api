@@ -67,22 +67,6 @@ module Api
 			# /contacts/new
 			def new
 				# we are going to make a new contact yall
-				''' # prop list for while we build this out
-					_id => {BSON::ID}
-					email
-					phone_numbers => {}
-					address => {}
-					first_name
-					last_name
-					source
-					account_id
-					employer => {}
-					assignments => {bool, []}
-					social_accounts => {}
-					created_date
-					tag_ids => []
-					contact_form_data = {}
-				'''
 				# comes in like post
 				# {'api_token': ..., 'contact': {}}
 				contact_params = params[:contact] # be sure to clean all the values
@@ -94,7 +78,7 @@ module Api
 				# should be it for that, as long as the keys mactch rails should set it
 				
 				# now we can save the contact
-				
+				#c.save
 				# now let's this new contact to the client
 				render json: {:status => "success", :contact => c}
 			end # end new contact
