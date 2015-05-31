@@ -113,9 +113,8 @@ module Api
 				# save it
 				contact.save
 				
-				
-				
-				render json: {:contact => contact}
+				# send it back to the client
+				render json: {:status => "success", :contact => contact}
 			end # end add_tag_to_contact method
 			
 			# /contacts/tags/remove
