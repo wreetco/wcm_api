@@ -75,12 +75,12 @@ module Api
 				# lets allow rails to build this for us automagically
 				c = Contact.new
 				c.from_json(contact_params.to_json) # generate from our cleaned params
-				# should be it for that, as long as the keys mactch rails should set it
+				# should be it for that, as long as the keys match, rails should set it
 				
 				# now we can save the contact
-				#c.save
-				#@user.accounts.first.contacts << c
-				#@user.accounts.first.save
+				c.save
+				@user.accounts.first.contacts << c
+				@user.accounts.first.save
 				
 				# now let's this new contact to the client
 				render json: {:status => "success", :contact => c}
