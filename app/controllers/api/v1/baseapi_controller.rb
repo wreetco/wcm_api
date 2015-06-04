@@ -1,6 +1,5 @@
 
 class Api::V1::BaseapiController < ApplicationController
-  protect_from_forgery with: :null_session
 	before_filter :parse_request, :authenticate_user_from_token!
 	
 	# methods for the other API controllers 

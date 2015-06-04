@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
 	namespace :api do
 		namespace :v1 do
 			scope '/contacts' do
@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 			scope '/tags' do
 				# global tag actions
 			end # end tag scope
+			#scope '/user' do
+			#	post '/auth' => 'users#auth'
+			#end # end user ns
 		end # end v1 namespace
 	end # end API namespace
 
