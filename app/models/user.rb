@@ -11,7 +11,7 @@ class User
 	end;
 
 
-	devise :database_authenticatable, #:registerable,
+	devise :database_authenticatable, :registerable,
 				 :recoverable, :rememberable, :trackable, :validatable
 
 	## Database authenticatable
