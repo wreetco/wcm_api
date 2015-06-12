@@ -4,12 +4,17 @@ class SessionsController < Devise::SessionsController
 	skip_before_filter :authenticate_user_from_token!, :verify_authenticity_token
 	
 	def create
-		user = User.find_by(email: params[:user][:email])
-		if user.valid_password?(params[:user][:password])
-			render json: user
-		else
+		begin
+			user = User.find_by(email: params[:user][:email])
+			if user.valid_password?(params[:user][:password])
+				render json: user
+			else
+				render json: {:wreet => 'co'}
+			end
+		rescue
 			render json: {:wreet => 'co'}
 		end
+			
 	end
 	
 	
